@@ -1,8 +1,9 @@
-var sessionStorage = window.sessionStorage;
+// var localStorage = window.localStorage;
+var localStorage = window.localStorage;
 
 var linearSpeed = 10; //线速度
 var angularSpeed = 10; //角速度
-sessionStorage.linearSpeed = 10;
+localStorage.linearSpeed = 10;
 var linearUp = false;
 var linearDown = false;
 var angularL = false;
@@ -12,37 +13,39 @@ var upRight = false;
 var downLeft = false;
 var downRight = false;
 
-var power;    //电池电量
+var power; //电池电量
 var powerNum;
-var warning = false;    //是否处于警告状态
-var bumperLeft;    //左侧碰撞
-var bumperRight;    //右侧碰撞
-var bumperCenter;     //中间碰撞
-var wheelDropLeft;     //左侧被提起
-var wheelDropRight;     //右侧呗提起
-var cliffLeft;    //左侧悬空
-var cliffRight;   //右侧悬空
-var cliffCenter;   // 中间悬空
-var button0Pressed;   //按键0是否被按下
-var button1Pressed;   //按键1是否被按下
-var button2Pressed;   //按键2是否被按下
+var warning = false; //是否处于警告状态
+var bumperLeft; //左侧碰撞
+var bumperRight; //右侧碰撞
+var bumperCenter; //中间碰撞
+var wheelDropLeft; //左侧被提起
+var wheelDropRight; //右侧呗提起
+var cliffLeft; //左侧悬空
+var cliffRight; //右侧悬空
+var cliffCenter; // 中间悬空
+var button0Pressed; //按键0是否被按下
+var button1Pressed; //按键1是否被按下
+var button2Pressed; //按键2是否被按下
 
 
-var URL = 'http://192.168.199.191:9000/control/move?';   //路由地址
+var URL = 'http://192.168.199.191:9000/control/move?'; //路由地址
 
 
-var currLinearSpeed = 0   //直线速度
-var currAngularSpeed = 0   //转弯速度
-var sending = false   //是否发送
+var currLinearSpeed = 0 //直线速度
+var currAngularSpeed = 0 //转弯速度
+var sending = false //是否发送
 
-window.onunload = function(e){
+window.onunload = function(e) {
     e = e || window.event;
-   
-    $.get('http://192.168.199.191:9000/sensor/camera/0/stopRGBStreamWS?sessionID=' + sessionStorage.sessionID, function(data) {
+
+    $.get('http://192.168.199.191:9000/sensor/camera/0/stopRGBStream?sessionID=' + localStorage.sessionID, function(data) {
+        console.log(data);
     });
+    console.log('test');
 }
 
-function checkState() {    //检查机器人状态
+function checkState() { //检查机器人状态
     if (bumperLeft) {
         $("#bumperLeft").attr('src', './images/warning.png');
     }
@@ -94,8 +97,8 @@ function checkState() {    //检查机器人状态
 }
 
 
-function setSending(_sending) {   //设置是否发送控制命令
-    if (sending && !_sending) {   
+function setSending(_sending) { //设置是否发送控制命令
+    if (sending && !_sending) {
 
         sending = _sending
         stop()
@@ -109,9 +112,9 @@ function setSending(_sending) {   //设置是否发送控制命令
     }
 }
 
-function keepSending() {   //持续发送控制命令
+function keepSending() { //持续发送控制命令
     $.ajax({
-            url: URL + 'sessionID=' + sessionStorage.sessionID + '&linear=' + currLinearSpeed + '&angular=' + currAngularSpeed + '&timeout=100',
+            url: URL + 'sessionID=' + localStorage.sessionID + '&linear=' + currLinearSpeed + '&angular=' + currAngularSpeed + '&timeout=100',
             type: 'GET',
             //dataType: 'json',
             data: "",
@@ -128,7 +131,7 @@ function keepSending() {   //持续发送控制命令
         });
 }
 
-function warn() {   //警告状态变成红点
+function warn() { //警告状态变成红点
     if (warning) {
         $('#center').attr('src', './images/center_red.png');
     } else {
@@ -136,37 +139,35 @@ function warn() {   //警告状态变成红点
     }
 }
 
-function battery(data) {  
-    powerNum = parseInt(Number(data.battery) * 100)
+function battery(data) {
+    powerNum = parseInt(Number(data.battery));
     power = powerNum.toString() + '%'; //获得电池电量
     $("#battery-state").text(power);
     if (data.charger == 'adapterCharging') {
         $("#battery-img").attr('src', './images/charging.png');
-    } 
-    else if(data.charger == 'adapterCharged'){
+    } else if (data.charger == 'adapterCharged') {
         $("#battery-img").attr('src', './images/full.png');
-    }
-    else{
+    } else {
         if (powerNum == 0) {
             $("#battery-img").attr('src', './images/empty.png');
         } else if (0 < powerNum <= 15) {
-        	$("#battery-img").attr('src', './images/low.png');
+            $("#battery-img").attr('src', './images/low.png');
         } else if (15 < powerNum <= 40) {
-        	$("#battery-img").attr('src', './images/lower.png');
+            $("#battery-img").attr('src', './images/lower.png');
         } else if (40 < powerNum <= 60) {
-        	$("#battery-img").attr('src', './images/half.png');
+            $("#battery-img").attr('src', './images/half.png');
         } else if (60 < powerNum <= 85) {
-			$("#battery-img").attr('src', './images/higher.png');
+            $("#battery-img").attr('src', './images/higher.png');
         } else if (85 < powerNum < 100) {
-        	$("#battery-img").attr('src', './images/high.png');
-        } 
+            $("#battery-img").attr('src', './images/high.png');
+        }
     }
 
 }
 
-function keepGetting() {   //调用event接口获得机器人信息
+function keepGetting() { //调用event接口获得机器人信息
     $.ajax({
-            url: 'http://192.168.199.191:9000/sensor/event?sessionID=' + sessionStorage.sessionID,
+            url: 'http://192.168.199.191:9000/sensor/event?sessionID=' + localStorage.sessionID,
             type: 'GET',
             dataType: 'json',
             data: "",
@@ -178,6 +179,7 @@ function keepGetting() {   //调用event接口获得机器人信息
             console.log("error");
         })
         .always(function(data) {
+            //获取机器人状态信息
             bumperLeft = data.bumperLeft;
             bumperRight = data.bumperRight;
             bumperCenter = data.bumperCenter;
@@ -204,7 +206,7 @@ function keepGetting() {   //调用event接口获得机器人信息
 }
 
 
-function getBatteryState() {    //调用state接口，获得机器人电池状态信息
+function getBatteryState() { //调用state接口，获得机器人电池状态信息
     $.ajax({
             url: 'http://192.168.199.191:9000/state',
             type: 'GET',
@@ -219,16 +221,15 @@ function getBatteryState() {    //调用state接口，获得机器人电池状�
         })
         .always(function(data) {
             battery(data);
-
-            setTimeout(getBatteryState, 5000);
+            setTimeout(getBatteryState, 5000);  //每隔5秒访问一次
         });
 
 }
 
 
-function stop() {    //停止控制机器人
+function stop() {           //停止机器人移动
     $.ajax({
-            url: URL + 'sessionID=' + sessionStorage.sessionID + '&linear=0&angular=0&timeout=100',
+            url: URL + 'sessionID=' + localStorage.sessionID + '&linear=0&angular=0&timeout=100',
             type: 'GET',
             //dataType: 'json',
             data: "",
@@ -251,8 +252,8 @@ $(document).ready(function() {
     var WS;
     var flag = false;
     //调用sensor/camera/0/getRGBStreamWS接口，请求视频流，html中使用canvas来显示
-    $.ajax({              
-            url: 'http://192.168.199.191:9000/sensor/camera/0/getRGBStreamWS?sessionID=' + sessionStorage.sessionID + '&format=mp4&width=320&height=240&rate=300',
+    $.ajax({
+            url: 'http://192.168.199.191:9000/sensor/camera/0/getRGBStreamWS?sessionID=' + localStorage.sessionID + '&format=mp4&width=320&height=240&rate=300',
             type: 'GET',
             dataType: 'json',
             data: "",
@@ -261,9 +262,9 @@ $(document).ready(function() {
             WS = data.webSocketURL;
             console.log(WS);
             console.log("success");
-            var canvas = document.getElementById('videoCanvas');  //取得页面中的Canvas元素
-            var client = new WebSocket(WS);     //使用请求获得的URL新建一个WebSocket
-            var player = new jsmpeg(client, {    //此处需要先调用jsmpg.js文件，按此方法调用jsmpeg()函数即可生成视频流
+            var canvas = document.getElementById('videoCanvas'); //取得页面中的Canvas元素
+            var client = new WebSocket(WS); //使用请求获得的URL新建一个WebSocket
+            var player = new jsmpeg(client, { //此处需要先调用jsmpg.js文件，按此方法调用jsmpeg()函数即可生成视频流
                 canvas: canvas,
                 autoplay: true
             });
@@ -277,7 +278,7 @@ $(document).ready(function() {
     //get video input end
 
     //控制事件开始
-    
+
     //手机端开始
     $("#up,#down,#left,#right").on('touchmove', function(event) {
         event.preventDefault();
@@ -317,14 +318,14 @@ $(document).ready(function() {
     $("#up").on('touchend', function(event) {
         $(this).attr('src', './images/up.png');
         event.preventDefault();
-        event.stopPropagation(); // 阻止事件冒泡	
+        event.stopPropagation(); // 阻止事件冒泡  
         currLinearSpeed = 0
         setSending(false)
     });
     $("#down").on('touchend', function(event) {
         $(this).attr('src', './images/down.png');
         event.preventDefault();
-        event.stopPropagation(); // 阻止事件冒泡	
+        event.stopPropagation(); // 阻止事件冒泡  
         currLinearSpeed = 0
         setSending(false)
     });
@@ -351,7 +352,7 @@ $(document).ready(function() {
         console.log(linearSpeed);
         if (linearSpeed < 50) {
             linearSpeed += 10;
-            sessionStorage.linearSpeed = linearSpeed;
+            localStorage.linearSpeed = linearSpeed;
             var num = Number($('#speedstate').text()) + 1;
             $('#speedstate').text(num);
         }
@@ -360,7 +361,7 @@ $(document).ready(function() {
     $("#speeddown").click(function() {
         if (linearSpeed > 10) {
             linearSpeed -= 10;
-            sessionStorage.linearSpeed = linearSpeed;
+            localStorage.linearSpeed = linearSpeed;
             var num = Number($('#speedstate').text()) - 1;
             $('#speedstate').text(num);
         }
@@ -449,14 +450,14 @@ $(document).ready(function() {
     $("#up").on('mouseup', function(event) {
         $(this).attr('src', './images/up.png');
         event.preventDefault();
-        event.stopPropagation(); // 阻止事件冒泡	
+        event.stopPropagation(); // 阻止事件冒泡  
         currLinearSpeed = 0
         setSending(false)
     });
     $("#down").on('mouseup', function(event) {
         $(this).attr('src', './images/down.png');
         event.preventDefault();
-        event.stopPropagation(); // 阻止事件冒泡	
+        event.stopPropagation(); // 阻止事件冒泡  
         currLinearSpeed = 0
         setSending(false)
     });
@@ -476,5 +477,5 @@ $(document).ready(function() {
     });
 
 
-//控制事件结束
+    //控制事件结束
 });

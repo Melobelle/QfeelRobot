@@ -1,5 +1,5 @@
-var sessionStorage = window.sessionStorage;
-var linear = sessionStorage.linearSpeed;
+var localStorage = window.localStorage;
+var linear = localStorage.linearSpeed;
 var angular = 10;;
 var single = true;
 var up = false;
@@ -17,7 +17,7 @@ function linearForward() {
     if (up && single) {
        	console.log('up');
        	$.ajax({
-					url: URL + 'sessionID=' + sessionStorage.sessionID + '&linear=' + sessionStorage.linearSpeed + '&angular=0&timeout=100',
+					url: URL + 'sessionID=' + localStorage.sessionID + '&linear=' + localStorage.linearSpeed + '&angular=0&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -40,7 +40,7 @@ function linearBackward() { //直线后退
     if (down && single) {
        console.log('down');
        $.ajax({
-					url: URL +'sessionID=' + sessionStorage.sessionID + '&linear=' + (-1)*sessionStorage.linearSpeed + '&angular=0&timeout=100',
+					url: URL +'sessionID=' + localStorage.sessionID + '&linear=' + (-1)*localStorage.linearSpeed + '&angular=0&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -65,7 +65,7 @@ function angularLeft() { //向左转
     if (left && single) {
       	console.log('left');
       	$.ajax({
-					url: URL + 'sessionID=' + sessionStorage.sessionID + '&linear=0&angular=10&timeout=100',
+					url: URL + 'sessionID=' + localStorage.sessionID + '&linear=0&angular=10&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -89,7 +89,7 @@ function angularRight() { //向右转
     if (right && single) {
         console.log('right');
         $.ajax({
-					url: URL +'sessionID=' + sessionStorage.sessionID + '&linear=0&angular=-10&timeout=100',
+					url: URL +'sessionID=' + localStorage.sessionID + '&linear=0&angular=-10&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -111,7 +111,7 @@ function up_leftForward(){
 	if (up && left) {
 		console.log('up+left');
 		$.ajax({
-					url: URL +'sessionID=' + sessionStorage.sessionID + '&linear='+sessionStorage.linearSpeed+'&angular=10&timeout=100',
+					url: URL +'sessionID=' + localStorage.sessionID + '&linear='+localStorage.linearSpeed+'&angular=10&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -133,7 +133,7 @@ function up_rightForward(){
 	if (up && right) {
 		console.log('up+right');
 		$.ajax({
-					url: URL +'sessionID=' + sessionStorage.sessionID + '&linear='+sessionStorage.linearSpeed+'&angular=-10&timeout=100',
+					url: URL +'sessionID=' + localStorage.sessionID + '&linear='+localStorage.linearSpeed+'&angular=-10&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -155,7 +155,7 @@ function down_leftBackward(){
 	if (down && left) {
 		console.log('down+left');
 		$.ajax({
-					url: URL +'sessionID=' + sessionStorage.sessionID + '&linear='+(-1)*sessionStorage.linearSpeed+'&angular=-10&timeout=100',
+					url: URL +'sessionID=' + localStorage.sessionID + '&linear='+(-1)*localStorage.linearSpeed+'&angular=-10&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -177,7 +177,7 @@ function down_rightBackward(){
 	if (down && right) {
 		console.log('down+right');
 		$.ajax({
-					url: URL +'sessionID=' + sessionStorage.sessionID + '&linear='+(-1)*sessionStorage.linearSpeed+'&angular=10&timeout=100',
+					url: URL +'sessionID=' + localStorage.sessionID + '&linear='+(-1)*localStorage.linearSpeed+'&angular=10&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",
@@ -198,7 +198,7 @@ function down_rightBackward(){
 function stop() { //停止
    	console.log('stop');
    	$.ajax({
-					url: URL + 'sessionID=' + sessionStorage.sessionID + '&linear=0&angular=0&timeout=100',
+					url: URL + 'sessionID=' + localStorage.sessionID + '&linear=0&angular=0&timeout=100',
 					type: 'GET',
 					//dataType: 'json',
 					data: "",

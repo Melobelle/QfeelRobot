@@ -4,7 +4,7 @@ var URL = 'http://192.168.199.191:9000/authentication/pair?'; //路由地址
 $(document).ready(function() {
     $("#pair-submit").on('click', function() { //点击配对发起配对请求
         var selfID = localStorage.selfID;
-        var robotID = $("#robotID").val();
+        var robotID = "00000000000000000000000000000000";  //内测使用32个零作为robotID
         var deviceName = $("#deviceName").val();
 
         $.ajax({
@@ -57,7 +57,6 @@ function checkSession() {
         console.log("firstLogin:" + localStorage.firstLogin);
         console.log('selfID:' + localStorage.selfID);
         console.log('sessionID:' + localStorage.sessionID);
-        window.location.href = 'connect.html';
     } else {
         console.log("firstLogin:" + localStorage.firstLogin);
         localStorage.selfID = randomString();   //生成一个随机字符串作为selfID，保存在本地

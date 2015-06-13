@@ -4,31 +4,13 @@ var localStorage = window.localStorage;
 var URL = 'http://192.168.199.191:9000/authentication/';   //路由地址
 
 
-function isConnected(){
-	$.ajax({
-		url: URL + 'isConnected/?sessionID='+ localStorage.sessionID,
-		type: 'GET',
-		dataType: 'json',
-		data: "",
-	})
-	.done(function() {
-		console.log("Already connected.");
-		window.location.href = 'control.html';
-	})
-	.fail(function() {
-		console.log("error");
-	})
-	.always(function() {
-		console.log("complete");
-	});	
-}
+
 function connecting(){    //持续尝试连接
-	console.log('selfID:' + localStorage.selfID);
-	console.log('firstLogin:' + localStorage.firstLogin);
-	console.log('sessionID:' + localStorage.sessionID);
-	//isConnected();    //是否已经连接
+	// console.log('selfID:' + localStorage.selfID);
+	// console.log('firstLogin:' + localStorage.firstLogin);
+	// console.log('sessionID:' + localStorage.sessionID);
 	$.ajax({
-		url: URL + 'connect?selfID='+localStorage.selfID+'&timeout='+500000,
+		url: URL + 'connect?selfID='+localStorage.selfID+'&timeout='+500000,    //使用connect接口尝试连接，发送参数selfID以及timeout(连接持续时间)
 		type: 'GET',
 		dataType: 'json',
 		data: "",
@@ -69,7 +51,7 @@ $("#confirm").click(function(event){   //已经连接成功，点击确定，跳
 
 function unpair(){   //解除配对
 	$.ajax({
-			url: URL + 'unpair?selfID='+localStorage.selfID,
+			url: URL + 'unpair?selfID='+localStorage.selfID,   //使用提供的unpair接口，只需发送参数selfID即可断开pair
 			type: 'GET',
 			dataType: 'json',
 			data: "",
@@ -78,7 +60,7 @@ function unpair(){   //解除配对
 
 		})
 		.fail(function(data) { 
-			if (data.status == 400) {  //unpair不成功,可能由于没有改selfID
+			if (data.status == 400) {  //unpair不成功,可能由于没有该selfID
 				 console.log('unpair failed');
 			}
 		})
