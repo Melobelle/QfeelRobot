@@ -1,6 +1,6 @@
 var sessionStorage = window.sessionStorage; //存储selfID
 var localStorage = window.localStorage; //本地存储
-var URL = 'http://192.168.199.191:9000/authentication/pair?'; //路由地址
+var URL = 'http://192.168.199.191:9000/'; //路由地址
 $(document).ready(function() {
     $("#pair-submit").on('click', function() { //点击配对发起配对请求
         var selfID = localStorage.selfID;
@@ -8,7 +8,7 @@ $(document).ready(function() {
         var deviceName = $("#deviceName").val();
 
         $.ajax({
-                url: URL + 'selfID=' + selfID + '&robotID=' + robotID + '&name=' + deviceName,
+                url: URL + 'authentication/pair?selfID=' + selfID + '&robotID=' + robotID + '&name=' + deviceName,
                 type: 'GET',
                 dataType: 'json',
                 data: "",

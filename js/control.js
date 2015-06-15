@@ -29,7 +29,7 @@ var button1Pressed; //按键1是否被按下
 var button2Pressed; //按键2是否被按下
 
 
-var URL = 'http://192.168.199.191:9000/control/move?'; //路由地址
+var URL = 'http://192.168.199.191:9000/'; //路由地址
 
 
 var currLinearSpeed = 0 //直线速度
@@ -39,7 +39,7 @@ var sending = false //是否发送
 window.onunload = function(e) {
     e = e || window.event;
 
-    $.get('http://192.168.199.191:9000/sensor/camera/0/stopRGBStream?sessionID=' + localStorage.sessionID, function(data) {
+    $.get(URL+'sensor/camera/0/stopRGBStream?sessionID=' + localStorage.sessionID, function(data) {
         console.log(data);
     });
     console.log('test');
@@ -114,7 +114,7 @@ function setSending(_sending) { //设置是否发送控制命令
 
 function keepSending() { //持续发送控制命令
     $.ajax({
-            url: URL + 'sessionID=' + localStorage.sessionID + '&linear=' + currLinearSpeed + '&angular=' + currAngularSpeed + '&timeout=100',
+            url: URL + 'control/move?sessionID=' + localStorage.sessionID + '&linear=' + currLinearSpeed + '&angular=' + currAngularSpeed + '&timeout=100',
             type: 'GET',
             //dataType: 'json',
             data: "",
@@ -167,7 +167,7 @@ function battery(data) {
 
 function keepGetting() { //调用event接口获得机器人信息
     $.ajax({
-            url: 'http://192.168.199.191:9000/sensor/event?sessionID=' + localStorage.sessionID,
+            url: URL+'sensor/event?sessionID=' + localStorage.sessionID,
             type: 'GET',
             dataType: 'json',
             data: "",
@@ -208,7 +208,7 @@ function keepGetting() { //调用event接口获得机器人信息
 
 function getBatteryState() { //调用state接口，获得机器人电池状态信息
     $.ajax({
-            url: 'http://192.168.199.191:9000/state',
+            url: URL+'state',
             type: 'GET',
             dataType: 'json',
             data: "",
@@ -229,7 +229,7 @@ function getBatteryState() { //调用state接口，获得机器人电池状态�
 
 function stop() {           //停止机器人移动
     $.ajax({
-            url: URL + 'sessionID=' + localStorage.sessionID + '&linear=0&angular=0&timeout=100',
+            url: URL + 'control/move?sessionID=' + localStorage.sessionID + '&linear=0&angular=0&timeout=100',
             type: 'GET',
             //dataType: 'json',
             data: "",
@@ -253,7 +253,7 @@ $(document).ready(function() {
     var flag = false;
     //调用sensor/camera/0/getRGBStreamWS接口，请求视频流，html中使用canvas来显示
     $.ajax({
-            url: 'http://192.168.199.191:9000/sensor/camera/0/getRGBStreamWS?sessionID=' + localStorage.sessionID + '&format=mp4&width=320&height=240&rate=300',
+            url: URL+'sensor/camera/0/getRGBStreamWS?sessionID=' + localStorage.sessionID + '&format=mp4&width=320&height=240&rate=300',
             type: 'GET',
             dataType: 'json',
             data: "",

@@ -1,7 +1,7 @@
 var sessionStorage = window.sessionStorage;
 var localStorage = window.localStorage;
 
-var URL = 'http://192.168.199.191:9000/authentication/';   //路由地址
+var URL = 'http://192.168.199.191:9000/';   //路由地址
 
 
 
@@ -10,7 +10,7 @@ function connecting(){    //持续尝试连接
 	// console.log('firstLogin:' + localStorage.firstLogin);
 	// console.log('sessionID:' + localStorage.sessionID);
 	$.ajax({
-		url: URL + 'connect?selfID='+localStorage.selfID+'&timeout='+500000,    //使用connect接口尝试连接，发送参数selfID以及timeout(连接持续时间)
+		url: URL + 'authentication/connect?selfID='+localStorage.selfID+'&timeout='+500000,    //使用connect接口尝试连接，发送参数selfID以及timeout(连接持续时间)
 		type: 'GET',
 		dataType: 'json',
 		data: "",
@@ -51,7 +51,7 @@ $("#confirm").click(function(event){   //已经连接成功，点击确定，跳
 
 function unpair(){   //解除配对
 	$.ajax({
-			url: URL + 'unpair?selfID='+localStorage.selfID,   //使用提供的unpair接口，只需发送参数selfID即可断开pair
+			url: URL + 'authentication/unpair?selfID='+localStorage.selfID,   //使用提供的unpair接口，只需发送参数selfID即可断开pair
 			type: 'GET',
 			dataType: 'json',
 			data: "",
