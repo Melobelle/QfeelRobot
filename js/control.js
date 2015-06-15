@@ -29,7 +29,7 @@ var button1Pressed; //按键1是否被按下
 var button2Pressed; //按键2是否被按下
 
 
-var URL = 'http://192.168.199.191:9000/'; //路由地址
+var URL = 'http://192.168.199.149:9000/'; //路由地址
 
 
 var currLinearSpeed = 0 //直线速度
@@ -150,15 +150,15 @@ function battery(data) {
     } else {
         if (powerNum == 0) {
             $("#battery-img").attr('src', './images/empty.png');
-        } else if (0 < powerNum <= 15) {
+        } else if (0 < powerNum && powerNum <= 15) {
             $("#battery-img").attr('src', './images/low.png');
-        } else if (15 < powerNum <= 40) {
+        } else if (15 < powerNum && powerNum  <= 40) {
             $("#battery-img").attr('src', './images/lower.png');
-        } else if (40 < powerNum <= 60) {
+        } else if (40 < powerNum && powerNum <= 60) {
             $("#battery-img").attr('src', './images/half.png');
-        } else if (60 < powerNum <= 85) {
+        } else if (60 < powerNum && powerNum <= 85) {
             $("#battery-img").attr('src', './images/higher.png');
-        } else if (85 < powerNum < 100) {
+        } else if (85 < powerNum && powerNum < 100) {
             $("#battery-img").attr('src', './images/high.png');
         }
     }
