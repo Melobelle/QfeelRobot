@@ -53,14 +53,15 @@ function randomString(len) {　　//用于生产随机字符串，作为客户�
 }
 
 function checkSession() {
-    if (localStorage.firstLogin == 'false') {     //如果是第一次登陆
-        console.log("firstLogin:" + localStorage.firstLogin);
-        console.log('selfID:' + localStorage.selfID);
-        console.log('sessionID:' + localStorage.sessionID);
-    } else {
+    // if (localStorage.firstLogin == 'false') {     //如果是第一次登陆
+    //     console.log("firstLogin:" + localStorage.firstLogin);
+    //     console.log('selfID:' + localStorage.selfID);
+    //     console.log('sessionID:' + localStorage.sessionID);
+    //     window.location.href = 'connect.html';
+    // } else {
         console.log("firstLogin:" + localStorage.firstLogin);
         localStorage.selfID = randomString();   //生成一个随机字符串作为selfID，保存在本地
-    }
+    // }
 }
 window.onload = function() {
     checkSession();     //页面加载时，检测是否第一次配对
